@@ -1,0 +1,16 @@
+import sqlite3
+import subprocess
+import os
+
+def test_import_creates_rows():
+    # clean db before test
+    if os.path.exists("db.sqlite"):
+        os.remove("db.sqlite")
+
+    # run the broken script
+    subprocess.run(["python", "app/importer.py", "app/data/users.csv"])
+
+    # check if data actually got saved
+    conn = sqlite3.connect("db.sqlite")
+    count = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+    assert count == 4, f"Expected 4 rows but got {count}"
