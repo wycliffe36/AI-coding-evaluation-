@@ -1,0 +1,6 @@
+#!/bin/bash
+# Fix 1: Add encoding utf-8
+sed -i 's/open(csv_path, "r")/open(csv_path, "r", encoding="utf-8")/' app/importer.py
+# Fix 2: Add commit before close
+sed -i '/conn.close()/i\ conn.commit()' app/importer.py
+echo "Fixed. Run pytest to verify."
