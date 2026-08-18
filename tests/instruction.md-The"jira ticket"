@@ -1,0 +1,23 @@
+## [BUG-42] User Import Pipeline Imports 0 Rows
+
+### Description
+The data team reported that running the user import script completes successfully but the database remains empty. No errors are shown in the logs.
+
+### Steps to Reproduce
+1. Run: `python app/importer.py app/data/users.csv`
+2. Check database: `sqlite3 db.sqlite "SELECT COUNT(*) FROM users;"`
+
+### Expected Behavior
+The database `db.sqlite` should contain 4 users after running the script.
+
+### Actual Behavior
+The database is created but contains 0 rows.
+
+### Constraints
+- Do NOT modify `app/data/users.csv`
+- Do NOT modify `tests/test_importer.py`
+- You MAY modify `app/importer.py`
+- Solution must pass `pytest`
+
+### Acceptance Criteria
+`pytest` passes with all 4 rows imported correctly, including UTF-8 names.
